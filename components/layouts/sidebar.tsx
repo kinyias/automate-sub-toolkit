@@ -33,7 +33,7 @@ const navItems = [
     href: "/script",
     label: "AI Script Generator",
     icon: FileText,
-    description: "Coming soon",
+    description: ".srt files",
   },
   {
     href: "/more",
