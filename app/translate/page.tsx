@@ -10,9 +10,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Progress } from "@/components/ui/progress"
 import { parseSrt, type SrtEntry } from "@/lib/parse-srt"
 import { generateSrt, type TranslatedSrtEntry } from "@/lib/generate-srt"
-import { mockTranslate } from "@/lib/mock-translate"
+import { srtTranslate } from "@/lib/srt-translate"
 import { Languages, Download, Loader2 } from "lucide-react"
-
+import {toast} from "react-hot-toast"
 /**
  * Translate Subtitles page
  * Main feature: Upload .srt files, translate with AI, export results
@@ -59,11 +59,13 @@ export default function TranslatePage() {
     setProgress(0)
 
     try {
-      const results = await mockTranslate(entries, apiKey, (current, total) => {
+      const results = await srtTranslate(entries, apiKey,"tiếng việt", "Liên minh", (current, total) => {
         setProgress(Math.round((current / total) * 100))
       })
       setTranslatedEntries(results)
-    } catch (err) {
+        toast.success("Translation completed successfully")
+    } catch (err: any) {
+        toast.error(err.message || "Translation failed")
       setError(err instanceof Error ? err.message : "Translation failed")
     } finally {
       setIsTranslating(false)
