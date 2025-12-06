@@ -28,7 +28,7 @@ export function FileUploader({ onFileContent, accept = ".srt", disabled = false 
 
       // Validate file type
       if (!file.name.endsWith(".srt")) {
-        setError("Please upload a valid .srt file")
+        setError("Vui lòng tải lên tệp .srt hợp lệ")
         return
       }
 
@@ -41,7 +41,7 @@ export function FileUploader({ onFileContent, accept = ".srt", disabled = false 
         }
       }
       reader.onerror = () => {
-        setError("Failed to read file")
+        setError("Không thể đọc tệp")
       }
       reader.readAsText(file)
     },
@@ -111,14 +111,14 @@ export function FileUploader({ onFileContent, accept = ".srt", disabled = false 
             if (!disabled) handleClick()
           }
         }}
-        aria-label="Upload SRT file"
+        aria-label="Tải lên tệp SRT"
       >
         {fileName ? (
           <div className="flex items-center gap-3">
             <FileText className="h-8 w-8 text-primary" />
             <div className="flex flex-col">
               <span className="font-medium text-foreground">{fileName}</span>
-              <span className="text-xs text-muted-foreground">Click to replace</span>
+              <span className="text-xs text-muted-foreground">Nhấp để thay thế</span>
             </div>
             <Button
               variant="ghost"
@@ -128,7 +128,7 @@ export function FileUploader({ onFileContent, accept = ".srt", disabled = false 
                 e.stopPropagation()
                 clearFile()
               }}
-              aria-label="Remove file"
+              aria-label="Xóa tệp"
             >
               <X className="h-4 w-4" />
             </Button>
@@ -136,8 +136,8 @@ export function FileUploader({ onFileContent, accept = ".srt", disabled = false 
         ) : (
           <>
             <Upload className="mb-3 h-10 w-10 text-muted-foreground" />
-            <p className="text-sm font-medium text-foreground">Drop your .srt file here or click to browse</p>
-            <p className="mt-1 text-xs text-muted-foreground">Supports SRT subtitle files</p>
+            <p className="text-sm font-medium text-foreground">Kéo thả tệp .srt vào đây hoặc nhấp để duyệt</p>
+            <p className="mt-1 text-xs text-muted-foreground">Hỗ trợ tệp phụ đề SRT</p>
           </>
         )}
       </div>

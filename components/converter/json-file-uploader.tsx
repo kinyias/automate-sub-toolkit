@@ -25,7 +25,7 @@ export function JsonFileUploader({ onFileContent, disabled = false }: JsonFileUp
 
       // Validate file type
       if (!file.name.endsWith(".json")) {
-        setError("Please upload a valid .json file")
+        setError("Vui lòng tải lên tệp .json hợp lệ")
         return
       }
 
@@ -38,7 +38,7 @@ export function JsonFileUploader({ onFileContent, disabled = false }: JsonFileUp
         }
       }
       reader.onerror = () => {
-        setError("Failed to read file")
+        setError("Không thể đọc tệp")
       }
       reader.readAsText(file)
     },
@@ -108,14 +108,14 @@ export function JsonFileUploader({ onFileContent, disabled = false }: JsonFileUp
             if (!disabled) handleClick()
           }
         }}
-        aria-label="Upload JSON file"
+        aria-label="Tải lên tệp JSON"
       >
         {fileName ? (
           <div className="flex items-center gap-3">
             <FileJson className="h-8 w-8 text-primary" />
             <div className="flex flex-col">
               <span className="font-medium text-foreground">{fileName}</span>
-              <span className="text-xs text-muted-foreground">Click to replace</span>
+              <span className="text-xs text-muted-foreground">Nhấp để thay thế</span>
             </div>
             <Button
               variant="ghost"
@@ -125,7 +125,7 @@ export function JsonFileUploader({ onFileContent, disabled = false }: JsonFileUp
                 e.stopPropagation()
                 clearFile()
               }}
-              aria-label="Remove file"
+              aria-label="Xóa tệp"
             >
               <X className="h-4 w-4" />
             </Button>
@@ -133,8 +133,8 @@ export function JsonFileUploader({ onFileContent, disabled = false }: JsonFileUp
         ) : (
           <>
             <Upload className="mb-3 h-10 w-10 text-muted-foreground" />
-            <p className="text-sm font-medium text-foreground">Drop your JSON file here or click to browse</p>
-            <p className="mt-1 text-xs text-muted-foreground">Supports draft_content.json / draft_info.json</p>
+            <p className="text-sm font-medium text-foreground">Kéo thả tệp JSON vào đây hoặc nhấp để duyệt</p>
+            <p className="mt-1 text-xs text-muted-foreground">Hỗ trợ draft_content.json / draft_info.json</p>
           </>
         )}
       </div>

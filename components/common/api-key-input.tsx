@@ -45,7 +45,7 @@ export function ApiKeyInput({ value, onChange }: ApiKeyInputProps) {
         <Input
           id="api-key"
           type={showKey ? "text" : "password"}
-          placeholder="Enter your API key..."
+          placeholder="Nhập API key..."
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onBlur={handleBlur}
@@ -66,7 +66,7 @@ export function ApiKeyInput({ value, onChange }: ApiKeyInputProps) {
           )}
         </Button>
       </div>
-      <p className="text-xs text-muted-foreground">Your API key is stored locally and never sent to our servers.</p>
+      <p className="text-xs text-muted-foreground">Khóa API của bạn được lưu trữ cục bộ và không bao giờ được gửi đến máy chủ của chúng tôi.</p>
     </div>
   )
 }

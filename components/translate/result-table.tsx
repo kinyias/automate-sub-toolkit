@@ -43,7 +43,7 @@ export function ResultTable({ entries, onUpdateEntry }: ResultTableProps) {
   if (entries.length === 0) {
     return (
       <div className="flex h-64 items-center justify-center rounded-lg border border-dashed">
-        <p className="text-muted-foreground">No translations yet. Upload a file and click translate.</p>
+        <p className="text-muted-foreground">Chưa có bản dịch. Tải lên tệp và nhấp vào dịch.</p>
       </div>
     )
   }
@@ -54,10 +54,10 @@ export function ResultTable({ entries, onUpdateEntry }: ResultTableProps) {
         <TableHeader className="sticky top-0 bg-card">
           <TableRow>
             <TableHead>#</TableHead>
-            <TableHead >Time</TableHead>
-            <TableHead>Original Text</TableHead>
-            {isConverting && <TableHead>Translated Text</TableHead>}
-            {isConverting && <TableHead className="w-[100px] text-right">Actions</TableHead>}
+            <TableHead >Thời gian</TableHead>
+            <TableHead>Văn bản gốc</TableHead>
+            {isConverting && <TableHead>Văn bản dịch</TableHead>}
+            {isConverting && <TableHead className="w-[100px] text-right">Hành động</TableHead>}
           </TableRow>
         </TableHeader>
         <TableBody>

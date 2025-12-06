@@ -32,7 +32,7 @@ export default function TranslatePage() {
     const parsed = parseSrt(content)
 
     if (parsed.length === 0) {
-      setError("Could not parse any subtitles from the file. Please check the format.")
+      setError("Không thể phân tích phụ đề từ tệp. Vui lòng kiểm tra định dạng.")
       return
     }
 
@@ -45,12 +45,12 @@ export default function TranslatePage() {
   // Handle translation
   const handleTranslate = async () => {
     if (!apiKey.trim()) {
-      setError("Please enter your API key first")
+      setError("Vui lòng nhập khóa API trước")
       return
     }
 
     if (entries.length === 0) {
-      setError("Please upload an SRT file first")
+      setError("Vui lòng tải lên tệp SRT trước")
       return
     }
 
@@ -63,10 +63,10 @@ export default function TranslatePage() {
         setProgress(Math.round((current / total) * 100))
       })
       setTranslatedEntries(results)
-        toast.success("Translation completed successfully")
+        toast.success("Dịch thành công")
     } catch (err: any) {
-        toast.error(err.message || "Translation failed")
-      setError(err instanceof Error ? err.message : "Translation failed")
+        toast.error(err.message || "Dịch thất bại")
+      setError(err instanceof Error ? err.message : "Dịch thất bại")
     } finally {
       setIsTranslating(false)
     }
@@ -105,16 +105,16 @@ export default function TranslatePage() {
         <div>
           <h1 className="flex items-center gap-2 text-2xl font-bold text-foreground">
             <Languages className="h-7 w-7 text-primary" />
-            Translate Subtitles
+            Dịch Phụ Đề
           </h1>
-          <p className="mt-1 text-muted-foreground">Upload an SRT file, translate with AI, and export the results</p>
+          <p className="mt-1 text-muted-foreground">Tải lên tệp SRT, dịch bằng AI và xuất kết quả</p>
         </div>
 
         {/* Configuration Card */}
         <Card>
           <CardHeader>
-            <CardTitle>Configuration</CardTitle>
-            <CardDescription>Set up your API key and upload your subtitle file</CardDescription>
+            <CardTitle>Cấu hình</CardTitle>
+            <CardDescription>Thiết lập khóa API và tải lên tệp phụ đề của bạn</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* API Key Input */}
@@ -122,7 +122,7 @@ export default function TranslatePage() {
 
             {/* File Uploader */}
             <div className="space-y-2">
-              <label className="text-sm font-medium">Subtitle File</label>
+              <label className="text-sm font-medium">Tệp phụ đề</label>
               <FileUploader onFileContent={handleFileContent} disabled={isTranslating} />
             </div>
 
@@ -130,7 +130,7 @@ export default function TranslatePage() {
             {entries.length > 0 && (
               <div className="rounded-lg bg-muted/50 p-3">
                 <p className="text-sm text-muted-foreground">
-                  <span className="font-medium text-foreground">{entries.length}</span> subtitle entries loaded from{" "}
+                  <span className="font-medium text-foreground">{entries.length}</span> dòng phụ đề được tải từ{" "}
                   <span className="font-mono text-xs">{fileName}</span>
                 </p>
               </div>
@@ -153,12 +153,12 @@ export default function TranslatePage() {
               {isTranslating ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Translating...
+                  Đang dịch...
                 </>
               ) : (
                 <>
                   <Languages className="mr-2 h-4 w-4" />
-                  Translate Now
+                  Dịch Ngay
                 </>
               )}
             </Button>
@@ -167,7 +167,7 @@ export default function TranslatePage() {
             {isTranslating && (
               <div className="space-y-2">
                 <Progress value={progress} className="h-2" />
-                <p className="text-center text-xs text-muted-foreground">{progress}% complete</p>
+                <p className="text-center text-xs text-muted-foreground">{progress}% hoàn thành</p>
               </div>
             )}
           </CardContent>
@@ -177,17 +177,17 @@ export default function TranslatePage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
-              <CardTitle>Translation Results</CardTitle>
+              <CardTitle>Kết quả dịch</CardTitle>
               <CardDescription>
                 {translatedEntries.length > 0
-                  ? `${translatedEntries.length} entries translated`
-                  : "Results will appear here after translation"}
+                  ? `${translatedEntries.length} dòng đã dịch`
+                  : "Kết quả sẽ xuất hiện ở đây sau khi dịch"}
               </CardDescription>
             </div>
             {translatedEntries.length > 0 && (
               <Button onClick={handleExport} variant="outline">
                 <Download className="mr-2 h-4 w-4" />
-                Export .srt
+                Xuất .srt
               </Button>
             )}
           </CardHeader>

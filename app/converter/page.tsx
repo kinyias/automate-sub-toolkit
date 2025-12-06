@@ -27,14 +27,14 @@ export default function ConverterPage() {
       const parsed = parseCapCutJson(content)
 
       if (parsed.length === 0) {
-        setError("Could not parse any subtitles from the JSON file. Please check the format.")
+        setError("Không thể phân tích phụ đề từ tệp JSON. Vui lòng kiểm tra định dạng.")
         return
       }
 
       setEntries(parsed)
       setFileName(name)
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to parse JSON file")
+      setError(err instanceof Error ? err.message : "Không thể phân tích tệp JSON")
       setEntries([])
     }
   }, [])
@@ -71,16 +71,16 @@ export default function ConverterPage() {
         <div>
           <h1 className="flex items-center gap-2 text-2xl font-bold text-foreground">
             <FileJson className="h-7 w-7 text-primary" />
-            JSON to SRT Converter
+            Chuyển đổi JSON sang SRT
           </h1>
-          <p className="mt-1 text-muted-foreground">Convert CapCut draft JSON files to SRT subtitle format</p>
+          <p className="mt-1 text-muted-foreground">Chuyển đổi tệp JSON bản nháp CapCut sang định dạng phụ đề SRT</p>
         </div>
 
         {/* Upload Card */}
         <Card>
           <CardHeader>
-            <CardTitle>Upload JSON File</CardTitle>
-            <CardDescription>Upload your CapCut draft_content.json or draft_info.json file</CardDescription>
+            <CardTitle>Tải lên tệp JSON</CardTitle>
+            <CardDescription>Tải lên tệp draft_content.json hoặc draft_info.json của CapCut</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* File Uploader */}
@@ -91,7 +91,7 @@ export default function ConverterPage() {
               <div className="flex items-center gap-2 rounded-lg bg-muted/50 p-3">
                 <ArrowRight className="h-4 w-4 text-primary" />
                 <p className="text-sm text-muted-foreground">
-                  <span className="font-medium text-foreground">{entries.length}</span> subtitle entries extracted from{" "}
+                  <span className="font-medium text-foreground">{entries.length}</span> dòng phụ đề được trích xuất từ{" "}
                   <span className="font-mono text-xs">{fileName}</span>
                 </p>
               </div>
@@ -110,17 +110,17 @@ export default function ConverterPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
-              <CardTitle>Extracted Subtitles</CardTitle>
+              <CardTitle>Phụ đề đã trích xuất</CardTitle>
               <CardDescription>
                 {entries.length > 0
-                  ? `${entries.length} entries ready for export - click to edit before exporting`
-                  : "Upload a JSON file to see extracted subtitles"}
+                  ? `${entries.length} dòng sẵn sàng để xuất - nhấp để chỉnh sửa trước khi xuất`
+                  : "Tải lên tệp JSON để xem phụ đề được trích xuất"}
               </CardDescription>
             </div>
             {entries.length > 0 && (
               <Button onClick={handleExport} variant="outline">
                 <Download className="mr-2 h-4 w-4" />
-                Export .srt
+                Xuất .srt
               </Button>
             )}
           </CardHeader>
