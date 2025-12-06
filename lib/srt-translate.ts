@@ -18,6 +18,7 @@ export async function srtTranslate(
   apiKey: string,
   targetLanguage: string,
   promptStyle: string,
+  model: string,
   onProgress?: (current: number, total: number) => void
 ): Promise<TranslatedSrtEntry[]> {
   if (!apiKey || apiKey.trim() === '') {
@@ -29,7 +30,7 @@ export async function srtTranslate(
   
   // If entries are 200 or less, process in single call
   if (entries.length <= BATCH_SIZE) {
-    return await translateBatch(entries, apiKey, targetLanguage, promptStyle, onProgress);
+    return await translateBatch(entries, apiKey, targetLanguage, promptStyle, model, onProgress);
   }
 
   // For more than 200 entries, process in chunks
@@ -54,6 +55,7 @@ export async function srtTranslate(
         apiKey,
         targetLanguage,
         promptStyle,
+        model,
         (current, total) => {
           // Calculate overall progress
           const batchProgress = (current / total) * batchEntries.length;
@@ -90,19 +92,20 @@ async function translateBatch(
   apiKey: string,
   targetLanguage: string,
   promptStyle: string,
+  modelName: string,
   onProgress?: (current: number, total: number) => void
 ): Promise<TranslatedSrtEntry[]> {
   // Initialize Gemini model
   const model = new ChatGoogleGenerativeAI({
     apiKey,
-    model: 'gemini-flash-latest',
+    model: modelName,
     temperature: 0.2,
     maxOutputTokens: 10000, // Increased for handling larger translations
   });
 
   // Create prompt template for bulk translation
   const translationPrompt = PromptTemplate.fromTemplate(`
-Bạn là một dịch giả phụ đề chuyên nghiệp, chuyên dịch phụ đề tiếng Trung sang ${targetLanguage} cho các video ${promptStyle}.
+Bạn là một dịch giả phụ đề chuyên nghiệp, chuyên dịch phụ đề sang ${targetLanguage} cho video.
 
 Nhiệm vụ:
 Dịch TOÀN BỘ các đoạn hội thoại phụ đề bên dưới sang ${targetLanguage}.
@@ -111,9 +114,9 @@ Yêu cầu về phong cách dịch:
 - Câu ngắn, mạnh, giàu kịch tính.
 - Giọng văn dứt khoát, tạo cảm giác căng thẳng, tò mò.
 - Tối ưu cho AI voice-over: mượt, tự nhiên, không lặp từ.
-- Giữ nguyên tên nhân vật, địa danh, vật phẩm trong LMHT.
+- Giữ nguyên tên nhân vật, địa danh, vật phẩm.
 - Dễ hiểu với ${targetLanguage}, ưu tiên tính lan truyền và thu hút.
-
+- ${promptStyle}
 QUY TẮC ĐỊNH DẠNG BẮT BUỘC:
 1. Tôi sẽ cung cấp phụ đề theo đúng format:
    [INDEX]: [NỘI DUNG HỘI THOẠI]

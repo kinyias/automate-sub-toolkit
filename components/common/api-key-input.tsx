@@ -39,7 +39,7 @@ export function ApiKeyInput({ value, onChange }: ApiKeyInputProps) {
     <div className="space-y-2">
       <Label htmlFor="api-key" className="flex items-center gap-2 text-sm font-medium">
         <Key className="h-4 w-4" />
-        AI API Key
+        GEMINI API Key
       </Label>
       <div className="relative">
         <Input

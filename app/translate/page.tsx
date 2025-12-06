@@ -8,6 +8,8 @@ import { ResultTable } from "@/components/translate/result-table"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
 import { parseSrt, type SrtEntry } from "@/lib/parse-srt"
 import { generateSrt, type TranslatedSrtEntry } from "@/lib/generate-srt"
 import { srtTranslate } from "@/lib/srt-translate"
@@ -25,6 +27,9 @@ export default function TranslatePage() {
   const [isTranslating, setIsTranslating] = useState(false)
   const [progress, setProgress] = useState(0)
   const [error, setError] = useState<string | null>(null)
+  const [model, setModel] = useState("gemini-2.5-flash")
+  const [targetLanguage, setTargetLanguage] = useState("Tiếng Việt")
+  const [promptStyle, setPromptStyle] = useState("")
 
   // Handle file upload
   const handleFileContent = useCallback((content: string, name: string) => {
@@ -42,7 +47,7 @@ export default function TranslatePage() {
     setProgress(0)
   }, [])
 
-  // Handle translation
+  // Handle translationsle
   const handleTranslate = async () => {
     if (!apiKey.trim()) {
       setError("Vui lòng nhập khóa API trước")
@@ -59,7 +64,7 @@ export default function TranslatePage() {
     setProgress(0)
 
     try {
-      const results = await srtTranslate(entries, apiKey,"tiếng việt", "Liên minh", (current, total) => {
+      const results = await srtTranslate(entries, apiKey,targetLanguage, promptStyle,model, (current, total) => {
         setProgress(Math.round((current / total) * 100))
       })
       setTranslatedEntries(results)
@@ -119,6 +124,57 @@ export default function TranslatePage() {
           <CardContent className="space-y-6">
             {/* API Key Input */}
             <ApiKeyInput value={apiKey} onChange={setApiKey} />
+
+            {/* Model Selection */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Model AI</label>
+              <Select value={model} onValueChange={setModel} disabled={isTranslating}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Chọn model" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="gemini-2.5-flash">Gemini 2.5 Flash</SelectItem>
+                  <SelectItem value="gemini-2.0-flash">Gemini 2.0 Flash</SelectItem>
+                  <SelectItem value="gemini-2.5-pro">Gemini 2.5 Pro</SelectItem>
+                  <SelectItem value="gemini-2.0-pro">Gemini 2.0 Pro</SelectItem>
+                  <SelectItem value="gemini-flash-latest">Gemini Flash Latest</SelectItem>
+                  <SelectItem value="gemini-pro-latest">Gemini Pro Latest</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Target Language Selection */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Ngôn ngữ đích</label>
+              <Select value={targetLanguage} onValueChange={setTargetLanguage} disabled={isTranslating}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Chọn ngôn ngữ" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Tiếng Việt">Tiếng Việt</SelectItem>
+                  <SelectItem value="English">English</SelectItem>
+                  <SelectItem value="Chinese">中文</SelectItem>
+                  <SelectItem value="Japanese">日本語</SelectItem>
+                  <SelectItem value="Korean">한국어</SelectItem>
+                  <SelectItem value="French">Français</SelectItem>
+                  <SelectItem value="German">Deutsch</SelectItem>
+                  <SelectItem value="Spanish">Español</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Prompt Style */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Phong cách dịch (tùy chọn)</label>
+              <Textarea
+                value={promptStyle}
+                onChange={(e) => setPromptStyle(e.target.value)}
+                placeholder="Ví dụ: Dịch theo phong cách trang trọng, hoặc dịch theo ngữ cảnh phim hành động..."
+                disabled={isTranslating}
+                rows={3}
+                className="resize-none"
+              />
+            </div>
 
             {/* File Uploader */}
             <div className="space-y-2">
