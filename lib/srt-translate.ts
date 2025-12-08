@@ -100,7 +100,7 @@ async function translateBatch(
     apiKey,
     model: modelName,
     temperature: 0.2,
-    maxOutputTokens: 10000, // Increased for handling larger translations
+    maxOutputTokens: 20000, // Increased for handling larger translations
   });
 
   // Create prompt template for bulk translation
