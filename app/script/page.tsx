@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import { DashboardLayout } from "@/components/layouts/dashboard-layout"
 import { ApiKeyInput } from "@/components/common/api-key-input"
 import { FileUploader } from "@/components/translate/file-uploader"
@@ -30,6 +30,41 @@ export default function ScriptPage() {
   const [targetLanguage, setTargetLanguage] = useState("Tiếng Việt")
   const [promptStyle, setPromptStyle] = useState("")
   const [copied, setCopied] = useState(false)
+
+  // Load values from localStorage on mount
+  useEffect(() => {
+    const savedModel = localStorage.getItem("script_model")
+    const savedTargetLanguage = localStorage.getItem("script_targetLanguage")
+    const savedPromptStyle = localStorage.getItem("script_promptStyle")
+    const savedScript = localStorage.getItem("script_script")
+
+    if (savedModel) setModel(savedModel)
+    if (savedTargetLanguage) setTargetLanguage(savedTargetLanguage)
+    if (savedPromptStyle) setPromptStyle(savedPromptStyle)
+    if (savedScript) setScript(savedScript)
+  }, [])
+
+  // Save model to localStorage when it changes
+  useEffect(() => {
+    localStorage.setItem("script_model", model)
+  }, [model])
+
+  // Save targetLanguage to localStorage when it changes
+  useEffect(() => {
+    localStorage.setItem("script_targetLanguage", targetLanguage)
+  }, [targetLanguage])
+
+  // Save promptStyle to localStorage when it changes
+  useEffect(() => {
+    localStorage.setItem("script_promptStyle", promptStyle)
+  }, [promptStyle])
+
+  // Save script to localStorage when it changes
+  useEffect(() => {
+    if (script) {
+      localStorage.setItem("script_script", script)
+    }
+  }, [script])
 
   // Handle file upload
   const handleFileContent = useCallback((content: string, name: string) => {

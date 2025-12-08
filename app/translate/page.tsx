@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import { DashboardLayout } from "@/components/layouts/dashboard-layout"
 import { ApiKeyInput } from "@/components/common/api-key-input"
 import { FileUploader } from "@/components/translate/file-uploader"
@@ -30,6 +30,47 @@ export default function TranslatePage() {
   const [model, setModel] = useState("gemini-2.5-flash")
   const [targetLanguage, setTargetLanguage] = useState("Tiếng Việt")
   const [promptStyle, setPromptStyle] = useState("")
+
+  // Load values from localStorage on mount
+  useEffect(() => {
+    const savedModel = localStorage.getItem("translate_model")
+    const savedTargetLanguage = localStorage.getItem("translate_targetLanguage")
+    const savedPromptStyle = localStorage.getItem("translate_promptStyle")
+    const savedTranslatedEntries = localStorage.getItem("translate_translatedEntries")
+
+    if (savedModel) setModel(savedModel)
+    if (savedTargetLanguage) setTargetLanguage(savedTargetLanguage)
+    if (savedPromptStyle) setPromptStyle(savedPromptStyle)
+    if (savedTranslatedEntries) {
+      try {
+        setTranslatedEntries(JSON.parse(savedTranslatedEntries))
+      } catch (e) {
+        console.error("Failed to parse saved translated entries:", e)
+      }
+    }
+  }, [])
+
+  // Save model to localStorage when it changes
+  useEffect(() => {
+    localStorage.setItem("translate_model", model)
+  }, [model])
+
+  // Save targetLanguage to localStorage when it changes
+  useEffect(() => {
+    localStorage.setItem("translate_targetLanguage", targetLanguage)
+  }, [targetLanguage])
+
+  // Save promptStyle to localStorage when it changes
+  useEffect(() => {
+    localStorage.setItem("translate_promptStyle", promptStyle)
+  }, [promptStyle])
+
+  // Save translatedEntries to localStorage when they change
+  useEffect(() => {
+    if (translatedEntries.length > 0) {
+      localStorage.setItem("translate_translatedEntries", JSON.stringify(translatedEntries))
+    }
+  }, [translatedEntries])
 
   // Handle file upload
   const handleFileContent = useCallback((content: string, name: string) => {
