@@ -19,7 +19,7 @@ export async function srtToScript(
     model: modelName,
     generationConfig: {
       temperature: 0.7,
-      maxOutputTokens: 8000,
+      maxOutputTokens: 20000,
     },
   });
 
