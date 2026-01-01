@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useCallback, useEffect } from "react"
-import { DashboardLayout } from "@/components/layouts/dashboard-layout"
+
 import { ApiKeyInput } from "@/components/common/api-key-input"
 import { FileUploader } from "@/components/translate/file-uploader"
 import { Button } from "@/components/ui/button"
@@ -153,7 +153,7 @@ export default function ScriptPage() {
   }
 
   return (
-    <DashboardLayout>
+
       <div className="space-y-6">
         {/* Page Header */}
         <div>
@@ -324,6 +324,6 @@ export default function ScriptPage() {
           </CardContent>
         </Card>
       </div>
-    </DashboardLayout>
+
   )
 }

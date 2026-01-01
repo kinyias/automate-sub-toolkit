@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useCallback } from "react"
-import { DashboardLayout } from "@/components/layouts/dashboard-layout"
+
 import { JsonFileUploader } from "@/components/converter/json-file-uploader"
 import { ResultTable } from "@/components/translate/result-table"
 import { Button } from "@/components/ui/button"
@@ -65,7 +65,7 @@ export default function ConverterPage() {
   }, [])
 
   return (
-    <DashboardLayout>
+
       <div className="space-y-6">
         {/* Page Header */}
         <div>
@@ -129,6 +129,6 @@ export default function ConverterPage() {
           </CardContent>
         </Card>
       </div>
-    </DashboardLayout>
+
   )
 }

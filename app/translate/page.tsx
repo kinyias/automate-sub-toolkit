@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useCallback, useEffect } from "react"
-import { DashboardLayout } from "@/components/layouts/dashboard-layout"
+
 import { ApiKeyInput } from "@/components/common/api-key-input"
 import { FileUploader } from "@/components/translate/file-uploader"
 import { ResultTable } from "@/components/translate/result-table"
@@ -145,7 +145,7 @@ export default function TranslatePage() {
   }, [])
 
   return (
-    <DashboardLayout>
+
       <div className="space-y-6">
         {/* Page Header */}
         <div>
@@ -293,6 +293,6 @@ export default function TranslatePage() {
           </CardContent>
         </Card>
       </div>
-    </DashboardLayout>
+
   )
 }

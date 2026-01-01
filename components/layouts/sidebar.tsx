@@ -27,7 +27,13 @@ const navItems = [
     href: "/youtube",
     label: "YouTube Keyword Tool",
     icon: Youtube,
-    description: "Coming soon",
+    description: "YouTube video keywords",
+  },
+  {
+    href: "/youtubeseo",
+    label: "YouTube SEO Tool",
+    icon: Youtube,
+    description: "YouTube video SEO",
   },
   {
     href: "/script",
